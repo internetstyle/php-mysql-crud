@@ -7,6 +7,7 @@
  * The full license text can be found in the LICENSE.txt file.
  */
 
+return;
 use lithium\core\Libraries;
 use lithium\core\Environment;
 use lithium\data\Connections;
