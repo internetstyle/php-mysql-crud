@@ -1,0 +1,41 @@
+version: "3"
+services:
+
+    mysql:
+      container_name: php-mysql-crud-db
+      build: ./mysql
+      ports:
+       - "3306:3306"
+      volumes:
+        - ../docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+
+    ui:
+      container_name: php-mysql-crud-ui
+      privileged: true
+      working_dir: /app
+      build:
+        context: ../
+        dockerfile: docker/ui/Dockerfile
+      volumes:
+        - ../ui:/app
+        - ../docker/ui/entrypoint.sh:/app/entrypoint.sh
+      ports:
+       - "3000:3000"
+
+    webserver:
+      image: nginx:alpine
+      container_name: php-mysql-crud-webserver
+      working_dir: /app
+      volumes:
+          - ../app:/app
+          - ../docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "1025:80"
+
+    php-fpm:
+      container_name: php-mysql-crud-php-fpm
+      build: ./php-fpm
+      working_dir: /app
+      volumes:
+        - ../app:/app
+        - ../docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini    
