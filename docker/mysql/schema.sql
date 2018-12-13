@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS `Orders` (
 CREATE TABLE IF NOT EXISTS `OrdersProducts` ( 
   `OrderId` int (11) NOT NULL,
   `ProductId` int (11) NOT NULL,
-  `Quantity` smallint (3) NOT NULL DEFAULT 1
+  `Quantity` smallint (3) NOT NULL DEFAULT 1,
+  `Price` decimal (6, 2) NOT NULL
 );
