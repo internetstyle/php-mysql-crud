@@ -4,7 +4,7 @@ import { Footer, Container, Columns, Column } from 'bloomer';
 import Routes from './routes';
 
 const App = () => (
-  <div className="App">
+  <div className="App" style={{ marginTop: 72 }}>
     <Routes />
     <Footer id="footer">
       <Container>
