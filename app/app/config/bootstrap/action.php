@@ -41,17 +41,22 @@ use lithium\core\Libraries;
  * @see lithium\core\Environment
  * @see lithium\net\http\Router
  */
-Filters::apply(Dispatcher::class, 'run', function($params, $next) {
-	Environment::set($params['request']);
+Filters::apply(Dispatcher::class, 'run', function ($params, $next) {
+    Environment::set($params['request']);
 
-	foreach (array_reverse(Libraries::get()) as $name => $config) {
-		if ($name === 'lithium') {
-			continue;
-		}
-		$file = "{$config['path']}/config/routes.php";
-		file_exists($file) ? call_user_func(function() use ($file) { include $file; }) : null;
-	}
-	return $next($params);
+    foreach (array_reverse(Libraries::get()) as $name => $config) {
+        if ($name === 'lithium') {
+            continue;
+        }
+        $file = "{$config['path']}/config/routes.php";
+        file_exists($file) ? call_user_func(function () use ($file) {include $file;}) : null;
+    }
+
+    $response = $next($params);
+
+    $response->headers['Access-Control-Allow-Origin'] = "*";
+
+    return $response;
 });
 
 /**
@@ -63,16 +68,14 @@ Filters::apply(Dispatcher::class, 'run', function($params, $next) {
  * @link http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
  */
 // Filters::apply(Dispatcher::class, 'run', function($params, $next) {
-// 	$whitelist = [
-// 		'example.org',
-// 		'www.example.org'
-// 	];
-// 	foreach ($whitelist as $host) {
-// 		if ($params['request']->host === $host) {
-// 			return $next($params);
-// 		}
-// 	}
-// 	throw new Exception('Suspicious Operation');
+//     $whitelist = [
+//         'example.org',
+//         'www.example.org'
+//     ];
+//     foreach ($whitelist as $host) {
+//         if ($params['request']->host === $host) {
+//             return $next($params);
+//         }
+//     }
+//     throw new Exception('Suspicious Operation');
 // });
-
-?>
