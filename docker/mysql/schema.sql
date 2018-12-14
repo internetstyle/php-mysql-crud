@@ -23,5 +23,8 @@ CREATE TABLE IF NOT EXISTS `OrdersProducts` (
   `OrderId` int (11) NOT NULL,
   `ProductId` int (11) NOT NULL,
   `Quantity` smallint (3) NOT NULL DEFAULT 1,
-  `Price` decimal (6, 2) NOT NULL
+  `Price` decimal (6, 2) NOT NULL,
+  FOREIGN KEY (`OrderId`) REFERENCES `Orders`(`OrderId`) ON DELETE CASCADE
 );
+
+ALTER TABLE `OrdersProducts` ADD UNIQUE `PorductInOrder`(`OrderId`, `ProductId`);
