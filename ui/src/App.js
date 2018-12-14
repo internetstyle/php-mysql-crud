@@ -1,10 +1,20 @@
 import React from 'react';
 import 'bulma';
-import Header from './components/Header';
+import { Footer, Container, Columns, Column } from 'bloomer';
+import Routes from './routes';
 
 const App = () => (
   <div className="App">
-    <Header />
+    <Routes />
+    <Footer id="footer">
+      <Container>
+        <Columns>
+          <Column isFull hasTextAlign="centered">
+            <p>Made by Patrick Coutinho</p>
+          </Column>
+        </Columns>
+      </Container>
+    </Footer>
   </div>
 );
 

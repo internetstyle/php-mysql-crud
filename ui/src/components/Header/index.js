@@ -6,11 +6,12 @@ import {
   NavbarMenu,
   NavbarStart
 } from 'bloomer';
+import { Link } from 'react-router-dom';
 import brand from '../../assets/brand.svg';
 
 const Header = () => (
   <header id="main-header">
-    <Navbar>
+    <Navbar className="is-fixed-top">
       <NavbarBrand>
         <NavbarItem>
           <img
@@ -22,9 +23,15 @@ const Header = () => (
       </NavbarBrand>
       <NavbarMenu>
         <NavbarStart>
-          <NavbarItem href="#/">Home</NavbarItem>
-          <NavbarItem href="#/">Produtos</NavbarItem>
-          <NavbarItem href="#/">Pedidos</NavbarItem>
+          <NavbarItem tag={Link} to="/">
+            Home
+          </NavbarItem>
+          <NavbarItem tag={Link} to="/products">
+            Produtos
+          </NavbarItem>
+          <NavbarItem tag={Link} to="/orders">
+            Pedidos
+          </NavbarItem>
         </NavbarStart>
       </NavbarMenu>
     </Navbar>
