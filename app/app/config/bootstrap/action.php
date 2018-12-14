@@ -52,11 +52,7 @@ Filters::apply(Dispatcher::class, 'run', function ($params, $next) {
         file_exists($file) ? call_user_func(function () use ($file) {include $file;}) : null;
     }
 
-    $response = $next($params);
-
-    $response->headers['Access-Control-Allow-Origin'] = "*";
-
-    return $response;
+    return $response = $next($params);
 });
 
 /**
