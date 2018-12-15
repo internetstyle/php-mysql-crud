@@ -10,6 +10,8 @@ export default class Products extends Component {
     this.state = {
       products: []
     };
+
+    this.productDelete = this.productDelete.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +26,19 @@ export default class Products extends Component {
     this.setState({
       products
     });
+  };
+
+  productDelete = async event => {
+    const { id } = event.target;
+    const response = await api.get(`/products/delete/${id}`);
+
+    if (response.data.Status === 'OK') {
+      const { products } = this.state;
+      const newProducts = products.filter(obj => obj.ProductId !== id);
+      this.setState({
+        products: newProducts
+      });
+    }
   };
 
   render() {
@@ -61,11 +76,18 @@ export default class Products extends Component {
                   <td>{product.Price}</td>
                   <td>
                     <Link to={`/products/update/${product.ProductId}`}>
-                      <Button isColor="info">Editar</Button>
+                      <Button isColor="info" isOutlined>
+                        Editar
+                      </Button>
                     </Link>{' '}
-                    <Link to={`/products/delete/${product.ProductId}`}>
-                      <Button isColor="danger">Excluir</Button>
-                    </Link>
+                    <Button
+                      isColor="danger"
+                      isOutlined
+                      onClick={this.productDelete}
+                      id={product.ProductId}
+                    >
+                      Excluir
+                    </Button>
                   </td>
                 </tr>
               ))}

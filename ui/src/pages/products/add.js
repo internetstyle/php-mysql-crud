@@ -37,7 +37,7 @@ export default class ProductsAdd extends Component {
 
     const response = await api.post(`/products/create`, data);
 
-    if (response.data.status === 'OK') {
+    if (response.data.Status === 'OK') {
       history.push('/products');
     } else {
       console.log(response);

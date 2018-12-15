@@ -32,7 +32,7 @@ export default class ProductsEdit extends Component {
   loadProduct = async () => {
     const { match } = this.props;
 
-    const response = await api.get(`/products/view/${match.params.id}`);
+    const response = await api.put(`/products/view/${match.params.id}`);
 
     const { Name, Sku, Description, Price } = response.data;
 

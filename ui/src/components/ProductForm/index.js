@@ -63,7 +63,7 @@ export default class ProductForm extends Component {
             <textarea
               name="Description"
               className="textarea"
-              placeholder="Description"
+              placeholder="Descrição"
               onChange={this.handleFieldChange}
               value={values.Description}
             />
