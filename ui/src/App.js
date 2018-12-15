@@ -9,7 +9,7 @@ const App = () => (
     <Footer id="footer">
       <Container>
         <Columns>
-          <Column isFull hasTextAlign="centered">
+          <Column isFullWidth hasTextAlign="centered">
             <p>Made by Patrick Coutinho</p>
           </Column>
         </Columns>

@@ -42,13 +42,13 @@ export default class Products extends Component {
             </Column>
           </Columns>
 
-          <Table isBordered isStriped isNarrow isFullWidth>
+          <Table isStriped isFullWidth>
             <thead>
               <tr>
                 <th>Produto</th>
                 <th>Descrição</th>
                 <th>Preço</th>
-                <th>Editar</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -59,7 +59,14 @@ export default class Products extends Component {
                   </td>
                   <td>{product.Description}</td>
                   <td>{product.Price}</td>
-                  <td />
+                  <td>
+                    <Link to={`/products/update/${product.ProductId}`}>
+                      <Button isColor="info">Editar</Button>
+                    </Link>{' '}
+                    <Link to={`/products/delete/${product.ProductId}`}>
+                      <Button isColor="danger">Excluir</Button>
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 import ProductForm from '../../components/ProductForm';
 
-export default class ProductsAdd extends Component {
+export default class ProductsEdit extends Component {
   constructor(props) {
     super(props);
 
@@ -19,13 +19,33 @@ export default class ProductsAdd extends Component {
     this.submitForm = this.submitForm.bind(this);
   }
 
+  componentDidMount() {
+    this.loadProduct();
+  }
+
   getValue(name, value) {
     this.setState({
       [name]: value
     });
   }
 
+  loadProduct = async () => {
+    const { match } = this.props;
+
+    const response = await api.get(`/products/view/${match.params.id}`);
+
+    const { Name, Sku, Description, Price } = response.data;
+
+    this.setState({
+      Name,
+      Description,
+      Sku,
+      Price
+    });
+  };
+
   submitForm = async () => {
+    const { match } = this.props;
     const { Name, Sku, Description, Price } = this.state;
     const { history } = this.props;
     const data = {
@@ -35,9 +55,12 @@ export default class ProductsAdd extends Component {
       Price
     };
 
-    const response = await api.post(`/products/create`, data);
+    const response = await api.post(
+      `/products/update/${match.params.id}`,
+      data
+    );
 
-    if (response.data.status === 'OK') {
+    if (response.data.Status === 'OK') {
       history.push('/products');
     } else {
       console.log(response);
@@ -49,9 +72,9 @@ export default class ProductsAdd extends Component {
       <div>
         <Header />
         <Container isFluid>
-          <Title tag="h1">Adicionar Produto</Title>
+          <Title tag="h1">Editar Produto</Title>
           <ProductForm
-            type="add"
+            type="edit"
             values={this.state}
             onChange={this.getValue}
             submitForm={this.submitForm}
