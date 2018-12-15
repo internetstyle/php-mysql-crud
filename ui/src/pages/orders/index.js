@@ -75,11 +75,9 @@ export default class Orders extends Component {
                   <td>{order.Total}</td>
                   <td>{order.Date}</td>
                   <td>
-                    <Link to={`/orders/update/${order.OrderId}`}>
-                      <Button isColor="info" isOutlined>
-                        Visualizar Produtos
-                      </Button>
-                    </Link>{' '}
+                    <Button isColor="info" isOutlined>
+                      Visualizar Produtos
+                    </Button>{' '}
                     <Button
                       isColor="danger"
                       isOutlined

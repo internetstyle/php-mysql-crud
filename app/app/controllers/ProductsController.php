@@ -35,6 +35,37 @@ class ProductsController extends \lithium\action\Controller
         return json_encode($ret);
     }
 
+    public function search($term = null)
+    {
+        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Methods: GET, POST, PUT');
+        header("Access-Control-Allow-Headers: Content-Type");
+
+        $this->_render['type'] = 'json';
+
+        $products = Products::all([
+            'conditions' => [
+                'Name' => [
+                    'like' => "%$term%",
+                ],
+            ],
+        ]);
+
+        if (count($products) > 0) {
+            foreach ($products as $product) {
+                $ret[] = [
+                    'id' => $product->ProductId,
+                    'label' => $product->Name,
+                ];
+            }
+        } else {
+            $ret = [];
+        }
+
+        return json_encode($ret);
+    }
+
     public function create()
     {
         header("Access-Control-Allow-Origin: *");
