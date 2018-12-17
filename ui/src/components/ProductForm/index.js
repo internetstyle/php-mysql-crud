@@ -7,14 +7,16 @@ export default class ProductForm extends Component {
   constructor(props) {
     super(props);
 
+    const { type } = this.props;
+
     this.state = {
-      isValid: [false, false, false],
+      isValid: [type === 'edit', type === 'edit', type === 'edit'],
       color: {
         Name: '',
         Sku: '',
         Price: ''
       },
-      canSubmit: false,
+      canSubmit: type === 'edit',
       priceClass: 'input'
     };
 
@@ -22,8 +24,6 @@ export default class ProductForm extends Component {
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleCanSubmit = this.handleCanSubmit.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    const { type } = this.props;
 
     this.buttonText = 'Cadastrar';
     if (type === 'edit') {
