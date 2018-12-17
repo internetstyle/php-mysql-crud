@@ -46,7 +46,14 @@ export default class OrderForm extends Component {
   }
 
   render() {
-    const { products, productsSearch, value, quantity, total } = this.props;
+    const {
+      products,
+      productsSearch,
+      value,
+      quantity,
+      total,
+      canSubmit
+    } = this.props;
     return (
       <Box>
         <form>
@@ -126,7 +133,12 @@ export default class OrderForm extends Component {
           <hr />
           <div className="field is-grouped">
             <div className="control">
-              <Button isColor="info" isOutlined onClick={this.handleSubmit}>
+              <Button
+                isColor="info"
+                isOutlined
+                onClick={this.handleSubmit}
+                disabled={!canSubmit}
+              >
                 Adicionar pedido
               </Button>
             </div>

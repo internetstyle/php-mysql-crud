@@ -14,7 +14,8 @@ export default class OrdersAdd extends Component {
       id: '',
       products: [],
       productsSearch: [],
-      total: '0'
+      total: '0',
+      canSubmit: false
     };
 
     this.searchProducts = this.searchProducts.bind(this);
@@ -29,20 +30,28 @@ export default class OrdersAdd extends Component {
   }
 
   addProduct = async id => {
-    const response = await api.get(`/products/view/${id}`);
+    if (id.length > 0) {
+      const response = await api.get(`/products/view/${id}`);
 
-    const { products, quantity } = this.state;
+      const { products, quantity } = this.state;
 
-    response.data.Quantity = quantity;
+      response.data.Quantity = quantity;
 
-    let productsUpdate = [...products];
-    productsUpdate = productsUpdate.filter(item => item.ProductId !== id);
-    productsUpdate.push(response.data);
+      let productsUpdate = [...products];
+      productsUpdate = productsUpdate.filter(item => item.ProductId !== id);
+      productsUpdate.push(response.data);
 
-    let total = 0;
-    total = productsUpdate.reduce((a, b) => +a + +b.Price * +b.Quantity, 0);
+      let total = 0;
+      total = productsUpdate.reduce((a, b) => +a + +b.Price * +b.Quantity, 0);
 
-    this.setState({ products: productsUpdate, id: '', value: '', total });
+      this.setState({
+        products: productsUpdate,
+        id: '',
+        value: '',
+        total,
+        canSubmit: true
+      });
+    }
   };
 
   searchProducts = async value => {
@@ -78,7 +87,15 @@ export default class OrdersAdd extends Component {
   }
 
   render() {
-    const { products, productsSearch, value, id, quantity, total } = this.state;
+    const {
+      products,
+      productsSearch,
+      value,
+      id,
+      quantity,
+      total,
+      canSubmit
+    } = this.state;
     return (
       <div>
         <Header />
@@ -97,6 +114,7 @@ export default class OrdersAdd extends Component {
             selectProduct={this.selectProduct}
             addProduct={this.addProduct}
             total={total}
+            canSubmit={canSubmit}
           />
         </Container>
       </div>
