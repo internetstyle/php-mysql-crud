@@ -14,6 +14,9 @@ import {
   Column,
   Table
 } from 'bloomer';
+import Moment from 'react-moment';
+import 'moment-timezone'; // eslint-disable-line
+import 'moment/locale/pt'; // eslint-disable-line
 
 export default class OrderModal extends Component {
   constructor(props) {
@@ -39,7 +42,9 @@ export default class OrderModal extends Component {
           <ModalCardBody>
             <Box>
               <Columns>
-                <Column>Data: {order.Date}</Column>
+                <Column>
+                  Data: <Moment fromNow>{order.Date}</Moment>
+                </Column>
                 <Column>
                   Total:{' '}
                   {new Intl.NumberFormat('pt-BR', {

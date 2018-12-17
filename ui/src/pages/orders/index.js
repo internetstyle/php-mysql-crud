@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Container, Title, Table, Button, Columns, Column } from 'bloomer';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import api from '../../services/api';
 import Header from '../../components/Header';
 import OrderModal from '../../components/OrderModal';
+import 'moment-timezone'; // eslint-disable-line
+import 'moment/locale/pt'; // eslint-disable-line
 
 export default class Orders extends Component {
   constructor(props) {
@@ -107,7 +110,9 @@ export default class Orders extends Component {
                       currency: 'BRL'
                     }).format(order.Total)}
                   </td>
-                  <td>{order.Date}</td>
+                  <td>
+                    <Moment fromNow>{order.Date}</Moment>
+                  </td>
                   <td>
                     <Button
                       isColor="info"
