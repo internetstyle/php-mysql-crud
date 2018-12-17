@@ -182,6 +182,20 @@ class OrdersController extends \lithium\action\Controller
         ]);
 
         if ($order) {
+            foreach ($order->orders_products as $product) {
+                $to_search[] = $product->ProductId;
+            }
+
+            $products = Products::all([
+                'conditions' => [
+                    'ProductId' => $to_search,
+                ],
+            ]);
+
+            foreach ($order->orders_products as $product) {
+                $product->Name = $products[$product->ProductId]->Name;
+                $product->Sku = $products[$product->ProductId]->Sku;
+            }
             return json_encode($order->to('array'));
         } else {
             return json_encode([

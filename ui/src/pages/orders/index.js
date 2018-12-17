@@ -3,15 +3,20 @@ import { Container, Title, Table, Button, Columns, Column } from 'bloomer';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Header from '../../components/Header';
+import OrderModal from '../../components/OrderModal';
 
 export default class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders: []
+      orders: [],
+      modalIsActive: false,
+      openOrder: {}
     };
 
     this.orderDelete = this.orderDelete.bind(this);
+    this.openOrder = this.openOrder.bind(this);
+    this.closeOrder = this.closeOrder.bind(this);
   }
 
   componentDidMount() {
@@ -41,8 +46,26 @@ export default class Orders extends Component {
     }
   };
 
+  openOrder = async event => {
+    const { id } = event.target;
+    const response = await api.get(`/orders/view/${id}`);
+
+    if (response.data.OrderId !== undefined) {
+      this.setState({
+        openOrder: response.data,
+        modalIsActive: true
+      });
+    }
+  };
+
+  closeOrder() {
+    this.setState({
+      modalIsActive: false
+    });
+  }
+
   render() {
-    const { orders } = this.state;
+    const { orders, modalIsActive, openOrder } = this.state;
     return (
       <div>
         <Header />
@@ -56,6 +79,12 @@ export default class Orders extends Component {
               </Link>
             </Column>
           </Columns>
+
+          <OrderModal
+            isActive={modalIsActive}
+            openOrder={openOrder}
+            closeOrder={this.closeOrder}
+          />
 
           <Table isStriped isFullWidth>
             <thead>
@@ -75,7 +104,12 @@ export default class Orders extends Component {
                   <td>{order.Total}</td>
                   <td>{order.Date}</td>
                   <td>
-                    <Button isColor="info" isOutlined>
+                    <Button
+                      isColor="info"
+                      isOutlined
+                      id={order.OrderId}
+                      onClick={this.openOrder}
+                    >
                       Visualizar Produtos
                     </Button>{' '}
                     <Button
