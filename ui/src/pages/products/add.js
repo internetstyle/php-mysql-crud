@@ -12,7 +12,7 @@ export default class ProductsAdd extends Component {
       Name: '',
       Sku: '',
       Description: '',
-      Price: ''
+      Price: '0.00'
     };
 
     this.getValue = this.getValue.bind(this);

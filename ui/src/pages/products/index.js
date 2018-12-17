@@ -73,7 +73,12 @@ export default class Products extends Component {
                     <strong>{product.Name}</strong>
                   </td>
                   <td>{product.Description}</td>
-                  <td>{product.Price}</td>
+                  <td>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(product.Price)}
+                  </td>
                   <td>
                     <Link to={`/products/update/${product.ProductId}`}>
                       <Button isColor="info" isOutlined>

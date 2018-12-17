@@ -101,7 +101,12 @@ export default class Orders extends Component {
                   <td>
                     <strong>{order.OrderId}</strong>
                   </td>
-                  <td>{order.Total}</td>
+                  <td>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(order.Total)}
+                  </td>
                   <td>{order.Date}</td>
                   <td>
                     <Button

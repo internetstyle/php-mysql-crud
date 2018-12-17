@@ -40,7 +40,13 @@ export default class OrderModal extends Component {
             <Box>
               <Columns>
                 <Column>Data: {order.Date}</Column>
-                <Column>Total: {order.Total}</Column>
+                <Column>
+                  Total:{' '}
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(order.Total)}
+                </Column>
               </Columns>
             </Box>
             <Table isStriped isFullWidth>
@@ -61,7 +67,12 @@ export default class OrderModal extends Component {
                           <strong>{product.Name}</strong>
                         </td>
                         <td>{product.Quantity}</td>
-                        <td>{product.Price}</td>
+                        <td>
+                          {new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                          }).format(product.Price)}
+                        </td>
                       </tr>
                     ))
                   : false}
